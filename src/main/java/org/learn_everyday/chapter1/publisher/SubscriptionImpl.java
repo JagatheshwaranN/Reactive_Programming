@@ -10,7 +10,7 @@ public class SubscriptionImpl implements Subscription {
 
     private static final Logger log = LoggerFactory.getLogger(SubscriptionImpl.class);
     private final Faker faker;
-    private Subscriber<? super String> subscriber;
+    private final Subscriber<? super String> subscriber;
     private boolean isCancelled;
     private static final int MAX_ITEM = 10;
     private int count = 0;
@@ -23,6 +23,11 @@ public class SubscriptionImpl implements Subscription {
     @Override
     public void request(long requested) {
         if(isCancelled) {
+            return;
+        }
+        if(requested > MAX_ITEM) {
+            this.subscriber.onError(new RuntimeException("Validation Failed!"));
+            this.isCancelled = true;
             return;
         }
         log.info("Subscriber has requested {} items", requested);

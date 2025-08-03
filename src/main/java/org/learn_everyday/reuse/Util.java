@@ -3,6 +3,8 @@ package org.learn_everyday.reuse;
 import com.github.javafaker.Faker;
 import org.reactivestreams.Subscriber;
 
+import java.time.Duration;
+
 public class Util {
 
 
@@ -19,4 +21,13 @@ public class Util {
     public static Faker fake() {
         return faker;
     }
+
+    public static void sleep(int seconds) {
+        try {
+            Thread.sleep(Duration.ofSeconds(seconds));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

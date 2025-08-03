@@ -1,0 +1,22 @@
+The below are the Factory methods used to create Mono Publisher.
+
+just
+When the value is in memory already and no computation required.
+
+empty
+No item to emit.
+
+error
+Emit error.
+
+fromSupplier
+Delay execution by using Supplier<T>.
+
+from Callable
+Delay execution by using Callable<T>.
+
+fromFuture
+Publisher from CompletableFuture<T>.
+
+fromRunnable
+Emitting empty after method invocation.

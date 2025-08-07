@@ -1,0 +1,14 @@
+Flux.create -> FluxSink
+=======================
+1. It is designed to be used when have a single subscriber.
+2. FluxSink is thread safe. We can share it with multiple threads.
+3. We can keep on emitting data into the sink without worrying about downstream demand.
+4. FluxSink will deliver everything to Subscriber safely.
+
+Flux Generate
+=============
+1. Invokes the given lambda expression again and again based on downstream demand.
+2. We can emit only one value at a time.
+3. Will stop when complete method is invoked.
+4. Will stop when error method is invoked.
+5. Will stop downstream cancels.

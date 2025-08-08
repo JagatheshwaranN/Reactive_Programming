@@ -7,7 +7,9 @@ public class TakeOperator {
 
     public static void main(String[] args) {
         take();
+        System.out.println("*************************");
         takeWhile();
+        System.out.println("*************************");
         takeUntil();
     }
 

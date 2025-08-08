@@ -4,6 +4,7 @@ Flux.create -> FluxSink
 2. FluxSink is thread safe. We can share it with multiple threads.
 3. We can keep on emitting data into the sink without worrying about downstream demand.
 4. FluxSink will deliver everything to Subscriber safely.
+5. Accepts a Consumer<FluxSink<T>>
 
 Flux Generate
 =============
@@ -12,3 +13,5 @@ Flux Generate
 3. Will stop when complete method is invoked.
 4. Will stop when error method is invoked.
 5. Will stop downstream cancels.
+6. Its not thread safe.
+7. Accepts a Consumer<SynchronousSink<T>>

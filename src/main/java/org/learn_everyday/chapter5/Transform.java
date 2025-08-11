@@ -22,7 +22,7 @@ public class Transform {
 
         var isHandlerEnabled = true;
         getCustomer()
-                .transform( isHandlerEnabled ? handler() : Function.identity())
+                .transform(isHandlerEnabled ? handler() : Function.identity())
                 .subscribe();
 
         getPurchaseOrder()

@@ -1,0 +1,12 @@
+Schedulers != Parallel-Execution
+================================
+1. All the operations are always executed in sequential.
+2. Data is processed one by one - by a thread from the ThreadPool for a subscriber.
+3. Schedulers.parallel() - is a thread pool for CPU tasks. Does NOT mean parallel execution.
+
+Scheduler - ThreadPool
+======================
+boundedElastic - 10 * Number of CPU - Network / Time-Consuming / Blocking Operations.
+parallel - Number of CPU - CPU intensive tasks.
+single - 1 - A single dedicated thread for one-off tasks.
+immediate - N/A - Current Thread.

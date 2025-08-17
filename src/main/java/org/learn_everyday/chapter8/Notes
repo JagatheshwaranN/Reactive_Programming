@@ -1,0 +1,6 @@
+BackPressure / Overflow Strategy
+================================
+1. buffer - Keep in memory.
+2. error - Throw error to the downstream.
+3. drop - Once the queue is full, new items will be dropped.
+4. latest - Once the queue is full, keep 1 latest item as and when it arrives. Drop old.

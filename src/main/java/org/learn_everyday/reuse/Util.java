@@ -30,4 +30,12 @@ public class Util {
         }
     }
 
+    public static void sleepInMS(Duration duration) {
+        try {
+            Thread.sleep(duration);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

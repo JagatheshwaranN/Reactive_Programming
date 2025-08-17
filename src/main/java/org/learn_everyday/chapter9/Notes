@@ -1,0 +1,8 @@
+Options(Not exhaustive)
+=======================
+startWith
+concat
+merge
+zip
+flatMap
+concatMap

@@ -12,7 +12,6 @@ public class BackPressureWithMultipleSubscribers {
 
     public static void main(String[] args) {
 
-
         var producer = Flux.generate(
                         () -> 1,
                         (state, sink) -> {

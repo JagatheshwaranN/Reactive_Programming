@@ -14,9 +14,10 @@ public class BackPressureStrategies {
 
     public static void main(String[] args) {
 
-//        buffer();
-//        error();
-          drop();
+        buffer();
+        error();
+        drop();
+        latest();
     }
 
     private static void buffer() {
@@ -34,7 +35,8 @@ public class BackPressureStrategies {
                 .subscribeOn(Schedulers.parallel());
 
         producer
-                .onBackpressureBuffer()
+                //.onBackpressureBuffer()
+                .onBackpressureBuffer(10)
                 .limitRate(1)
                 .publishOn(Schedulers.boundedElastic())
                 .map(BackPressureStrategies::timeConsumeTask)
@@ -80,7 +82,30 @@ public class BackPressureStrategies {
                 .subscribeOn(Schedulers.parallel());
 
         producer
-                .onBackpressureBuffer(10)
+                .onBackpressureDrop()
+                .limitRate(1)
+                .publishOn(Schedulers.boundedElastic())
+                .map(BackPressureStrategies::timeConsumeTask)
+                .subscribe(Util.subscriber());
+        Util.sleep(60);
+    }
+
+    private static void latest() {
+
+        var producer = Flux.create(sink -> {
+                            for (int i = 1; i <= 500 && !sink.isCancelled(); i++) {
+                                log.info("Item Generated : {}", i);
+                                sink.next(i);
+                                Util.sleepInMS(Duration.ofMillis(50));
+                            }
+                            sink.complete();
+                        }
+                )
+                .cast(Integer.class)
+                .subscribeOn(Schedulers.parallel());
+
+        producer
+                .onBackpressureLatest()
                 .limitRate(1)
                 .publishOn(Schedulers.boundedElastic())
                 .map(BackPressureStrategies::timeConsumeTask)
@@ -89,6 +114,7 @@ public class BackPressureStrategies {
     }
 
     private static int timeConsumeTask(int i) {
+        log.info("Receive {}", i);
         Util.sleep(1);
         return i;
     }

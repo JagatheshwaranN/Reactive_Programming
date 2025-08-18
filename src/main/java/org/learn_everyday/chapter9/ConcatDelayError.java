@@ -7,37 +7,29 @@ import reactor.core.publisher.Flux;
 
 import java.time.Duration;
 
-public class StartWith {
+public class ConcatDelayError {
 
-    private static final Logger log = LoggerFactory.getLogger(StartWith.class);
+    private static final Logger log = LoggerFactory.getLogger(ConcatDelayError.class);
 
     public static void main(String[] args) {
         demo1();
         demo2();
         demo3();
-        demo4();
-
         Util.sleep(3);
     }
 
     private static void demo1() {
-        producer1().startWith()
+        producer1().concatWith(producer3())
                 .subscribe(Util.subscriber());
     }
 
     private static void demo2() {
-        producer1().startWith(-1, 0)
+        Flux.concat(producer1(), producer2(), producer3())
                 .subscribe(Util.subscriber());
     }
 
     private static void demo3() {
-        producer1().startWith(producer2())
-                .subscribe(Util.subscriber());
-    }
-
-    private static void demo4() {
-        producer1().startWith(producer2())
-                .startWith(-1, 0)
+        Flux.concatDelayError(producer1(), producer3(), producer2())
                 .subscribe(Util.subscriber());
     }
 
@@ -51,6 +43,10 @@ public class StartWith {
         return Flux.just(51, 52, 53)
                 .doOnSubscribe(s -> log.info("Subscribing to Producer2"))
                 .delayElements(Duration.ofMillis(10));
+    }
+
+    private static Flux<Integer> producer3() {
+        return Flux.error(new RuntimeException("oops"));
     }
 
 }

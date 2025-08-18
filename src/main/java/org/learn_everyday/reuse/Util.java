@@ -2,11 +2,16 @@ package org.learn_everyday.reuse;
 
 import com.github.javafaker.Faker;
 import org.reactivestreams.Subscriber;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import reactor.core.publisher.Flux;
 
 import java.time.Duration;
+import java.util.function.UnaryOperator;
 
 public class Util {
 
+    private static final Logger log = LoggerFactory.getLogger(Util.class);
 
     private static final Faker faker = Faker.instance();
 
@@ -36,6 +41,13 @@ public class Util {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static <T> UnaryOperator<Flux<T>> fluxLogger(String name) {
+        return flux -> flux
+                .doOnSubscribe(obj -> log.info("Subscribe to {}", name))
+                .doOnCancel(() -> log.info("Cancel {}", name))
+                .doOnComplete(() -> log.info("{} Completed", name));
     }
 
 }

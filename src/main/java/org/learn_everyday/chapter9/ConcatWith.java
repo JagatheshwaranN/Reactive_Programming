@@ -7,9 +7,9 @@ import reactor.core.publisher.Flux;
 
 import java.time.Duration;
 
-public class StartWith {
+public class ConcatWith {
 
-    private static final Logger log = LoggerFactory.getLogger(StartWith.class);
+    private static final Logger log = LoggerFactory.getLogger(ConcatWith.class);
 
     public static void main(String[] args) {
         demo1();
@@ -21,23 +21,23 @@ public class StartWith {
     }
 
     private static void demo1() {
-        producer1().startWith()
+        producer1().concatWithValues(-1, 0)
                 .subscribe(Util.subscriber());
     }
 
     private static void demo2() {
-        producer1().startWith(-1, 0)
+        producer1().concatWith(producer2())
                 .subscribe(Util.subscriber());
     }
 
     private static void demo3() {
-        producer1().startWith(producer2())
+        Flux.concat(producer1(), producer2())
                 .subscribe(Util.subscriber());
     }
 
     private static void demo4() {
-        producer1().startWith(producer2())
-                .startWith(-1, 0)
+        producer1().concatWith(producer2())
+                .take(2)
                 .subscribe(Util.subscriber());
     }
 

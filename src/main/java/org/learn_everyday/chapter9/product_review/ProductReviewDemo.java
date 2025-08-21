@@ -10,9 +10,9 @@ public class ProductReviewDemo {
 
         var client = new ExternalServiceClient();
 
-//        usingNormalApproach(client);
+        usingNormalApproach(client);
         usingConcatMap(client);
-//        usingFlatMap(client);
+        usingFlatMap(client);
     }
 
     private static void usingConcatMap(ExternalServiceClient client) {

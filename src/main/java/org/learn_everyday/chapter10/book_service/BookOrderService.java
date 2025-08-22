@@ -20,6 +20,7 @@ public class BookOrderService {
         bookOrderStream()
                 .filter(bookOrder -> allowedGenre.contains(bookOrder.genre()))
                 .buffer(Duration.ofSeconds(5))
+                .map(BookOrderService::generateReport)
                 .subscribe(Util.subscriber());
 
         Util.sleep(60);

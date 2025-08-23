@@ -1,0 +1,7 @@
+Sinks
+=====
+Sink Type       Publisher Type    # of Subscribers    Behaviour
+One             Mono              N                   -
+Many-Unicast    Flux              1                   Subscriber can join late if required.Messages will be stored in the memory.
+Many-Multicast  Flux              N                   Late subscribers can't see the messages.
+Many-Replay     Flux              N                   With replay of all values to late subscribers.

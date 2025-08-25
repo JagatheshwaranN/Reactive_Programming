@@ -46,7 +46,6 @@ public class SinkThreadSafety {
             });
         }
         Util.sleep(2);
-
         log.info("Size of list {}", list.size());
     }
 

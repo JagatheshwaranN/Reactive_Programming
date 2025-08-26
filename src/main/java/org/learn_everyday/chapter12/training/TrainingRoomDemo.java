@@ -23,6 +23,7 @@ public class TrainingRoomDemo {
 
         room.addMember(sara);
         sara.says("Hey Guys! Glad to be here..");
+
     }
 
 }

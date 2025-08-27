@@ -1,7 +1,9 @@
 package org.learn_everyday.chapter13.bookService;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,8 +13,7 @@ public class RateLimiter {
     private static final Map<String, Integer> categoryAttempts = Collections.synchronizedMap(new HashMap<>());
 
     static {
-        categoryAttempts.put("standard", 2);
-        categoryAttempts.put("prime", 3);
+        refresh();
     }
 
     static <T> Mono<T> limitCalls() {
@@ -24,7 +25,7 @@ public class RateLimiter {
         });
     }
 
-    private static boolean canAllow(String category) {
+    private synchronized static boolean canAllow(String category) {
         var attempts = categoryAttempts.getOrDefault(category, 0);
         if (attempts > 0) {
             categoryAttempts.put(category, attempts - 1);
@@ -32,4 +33,14 @@ public class RateLimiter {
         }
         return false;
     }
+
+    private static void refresh() {
+        Flux.interval(Duration.ofSeconds(5))
+                .startWith(1L)
+                .subscribe(i -> {
+                    categoryAttempts.put("standard", 2);
+                    categoryAttempts.put("prime", 3);
+                });
+    }
+
 }

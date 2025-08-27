@@ -1,0 +1,9 @@
+Context
+=======
+1. Meta-data about the request.
+2. Simple Key-Value pairs.
+    a. An immutable Map.
+3. Cross cutting concerns
+    a. Authentication
+    b. Rate limiting
+    c. Monitoring / Tracing

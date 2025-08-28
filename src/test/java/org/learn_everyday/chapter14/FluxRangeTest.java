@@ -44,4 +44,12 @@ public class FluxRangeTest {
                 .verify();
     }
 
+    @Test
+    public void fluxRandomRangeTestWithConsumeWhile() {
+        StepVerifier.create(getRandomItems())
+                .thenConsumeWhile(i -> i > 0 && i < 101)
+                .expectComplete()
+                .verify();
+    }
+
 }
